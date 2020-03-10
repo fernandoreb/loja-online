@@ -1,0 +1,58 @@
+version: '3'
+
+services:
+    keycloack:
+      image: jboss/keycloak
+      ports: 
+        - 8180:8080
+      volumes: 
+        - /home/fernandoreb/docker/volumes/keycloak/tmp:/tmp
+        - /home/fernandoreb/docker/volumes/keycloak/data:/opt/jboss/keycloak/standalone/data
+      restart: always
+      environment:
+        KEYCLOAK_USER: admin
+        KEYCLOAK_PASSWORD: admin
+
+    mongo:
+      image: mongo:3.4.23-xenial
+      ports: 
+        - 27017:27017
+        - 28017:28017
+      volumes: 
+        - /home/fernandoreb/docker/volumes/mongodb:/data/db
+      restart: always
+      environment:
+        AUTH: 'no'
+
+    redis:
+      image: redis:5.0.6-alpine
+      ports: 
+        - 6379:6379
+      restart: always
+
+    jbpm:
+      image: fernandoreb/jbpm-server-7.28-cors
+      ports: 
+        - 8080:8080
+      volumes: 
+        - /home/fernandoreb/docker/volumes/jbpm/standalone_data:/jbpm-server-7.28.0.Final-dist/standalone/data
+        - /home/fernandoreb/docker/volumes/jbpm/niogit:/jbpm-server-7.28.0.Final-dist/.niogit
+        - /home/fernandoreb/docker/volumes/jbpm/niogit-caseapp:/jbpm-server-7.28.0.Final-dist/.niogit-caseapp
+        - /home/fernandoreb/docker/volumes/jbpm/repositories:/jbpm-server-7.28.0.Final-dist/repositories
+        - /home/fernandoreb/docker/volumes/jbpm/index:/jbpm-server-7.28.0.Final-dist/.index
+        - /home/fernandoreb/.m2:$HOME/.m2
+      restart: always
+    
+    service-loja-online:
+      depends_on:
+        - mongo
+        - redis
+        - jbpm
+        - keycloack
+      image: fernandoreb/service-loja-online
+      ports: 
+        - 3000:3000
+      links:
+        - mongo
+        - redis
+      restart: always
