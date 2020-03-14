@@ -70,7 +70,7 @@ public class SalesProductsTaxesControllerTest{
     	
     	lenient().when(productService.save(product)).thenReturn(product);
 		
-		String result = salesProductsTaxesController.addNewProduct("Product 01", 12.23f);
+		String result = salesProductsTaxesController.addNewProduct("1234","Product 01", 12.23f,"teste","http://aasas");
 		
 		assertThat(result).isNotEmpty();
     }

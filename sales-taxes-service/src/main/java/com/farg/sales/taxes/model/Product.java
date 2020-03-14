@@ -23,6 +23,12 @@ public class Product {
 	private Integer id;
 
 	/**
+	 * SKU of product
+	 */
+	@NotEmpty(message = "Please provide a sku")
+	private String sku;
+	
+	/**
 	 * Name of product
 	 */
 	@NotEmpty(message = "Please provide a name")
@@ -34,6 +40,27 @@ public class Product {
 	@NotNull(message = "Please provide a price")
 	private Float price;
 	
+	/**
+	 * SKU of product
+	 */
+	@NotEmpty(message = "Please provide a description")
+	private String description;
+	
+	/**
+	 * URL of Image
+	 */
+	@NotEmpty(message = "Please informe a url to image of product")
+	private String url;
+	
+	
+	public String getUrl() {
+		return url;
+	}
+
+	public void setUrl(String url) {
+		this.url = url;
+	}
+
 	/**
 	 * List of sales taxes
 	 */
@@ -71,5 +98,22 @@ public class Product {
 	public void setSaleTaxes(List<SaleTax> saleTaxes) {
 		this.saleTaxes = saleTaxes;
 	}
+
+	public String getSku() {
+		return sku;
+	}
+
+	public void setSku(String sku) {
+		this.sku = sku;
+	}
+
+	public String getDescription() {
+		return description;
+	}
+
+	public void setDescription(String description) {
+		this.description = description;
+	}
+	
 		
 }

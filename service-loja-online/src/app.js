@@ -2,6 +2,7 @@ const express = require('express')
 const http = require('http')
 const status = require('http-status')
 const productsRoute = require('./routes/products')
+const productsCommentsRoute = require('./routes/productsComments')
 
 const app = express()
 
@@ -18,6 +19,7 @@ app.use(express.json())
 
 //adicionando a roda dos serviços em /api
 app.use('/api', productsRoute)
+app.use('/api', productsCommentsRoute)
 
 //rotas não encontradas, responde com 404
 app.use((request, response, next) => {

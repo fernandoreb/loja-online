@@ -21,6 +21,38 @@ import { AppRoutingModule } from './app.routing.module';
 import { initializer } from './_utils/app-init';
 import { HomeLojaComponent } from './home-loja/home-loja.component';
 
+import {
+  MatInputModule,
+  MatFormFieldModule,
+  MatButtonModule,
+  MatMenuModule,
+  MatToolbarModule,
+  MatIconModule,
+  MatCardModule,
+  MatSelectModule,
+  MatListModule,
+  MatSidenavModule,
+  MatGridListModule,
+  MatCheckboxModule,
+  MatButtonToggleModule
+} from '@angular/material';
+
+const materialModules = [
+  MatInputModule,
+  MatFormFieldModule,
+  MatButtonModule,
+  MatMenuModule,
+  MatToolbarModule,
+  MatIconModule,
+  MatCardModule,
+  MatSelectModule,
+  MatListModule,
+  MatSidenavModule,
+  MatGridListModule,
+  MatCheckboxModule,
+  MatButtonToggleModule
+];
+
 @NgModule({
   declarations: [
     AppComponent,
@@ -39,6 +71,7 @@ import { HomeLojaComponent } from './home-loja/home-loja.component';
     FormsModule,
     ReactiveFormsModule,
     AppRoutingModule,
+    ...materialModules
   ],
   providers: [
     {

@@ -63,11 +63,18 @@ public class SalesProductsTaxesController {
 	 */
 	@PostMapping(path = "/v1/product")
 	@ResponseStatus(HttpStatus.CREATED)
-	public @ResponseBody String addNewProduct(@RequestParam String name, @RequestParam Float price) {
+	public @ResponseBody String addNewProduct(@RequestParam String sku, 
+											  @RequestParam String name, 
+											  @RequestParam Float price,
+											  @RequestParam String description,
+											  @RequestParam String url) {
 
 		Product product = new Product();
+		product.setSku(sku);
 		product.setName(name);
 		product.setPrice(price);
+		product.setDescription(description);
+		product.setUrl(url);
 
 		productService.save(product);
 		return ""+product.getId();
@@ -122,3 +129,4 @@ public class SalesProductsTaxesController {
 	}
 
 }
+

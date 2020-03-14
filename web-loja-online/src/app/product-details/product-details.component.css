@@ -1,0 +1,11 @@
+mat-grid-list{
+    width:450px;
+}
+div.title{
+    background-color: rgba(0,0,0,.03);
+    height: 24px;
+    text-align: center;
+}
+div.principal{
+    width:460px;
+}

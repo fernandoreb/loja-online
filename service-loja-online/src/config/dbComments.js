@@ -12,13 +12,11 @@ mongoose.connect('mongodb://localhost:27017/db_lojaOnline');
 //mongoose.connect('mongodb://mongo:27017/db_lojaOnline');
 var Schema = mongoose.Schema;
 
-//Entidade Produto
-var productSchema = new Schema({
+//Entidade Comentário Produto
+var productCommentSchema = new Schema({
   sku: String,
-  name: String,
-  price: String,
   description: String
 });
 
-var Product = mongoose.model('Product', productSchema);
-module.exports = Product;
+var ProductComments = mongoose.model('ProductComments', productCommentSchema);
+module.exports = ProductComments;

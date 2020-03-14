@@ -15,6 +15,7 @@ let keycloakConfig: KeycloakConfig = {
 export const environment = {
   production: true,
   keycloakConfig,
-  apiProductUrl: 'http://localhost:3000/api',
+  apiProductUrl: 'http://localhost:8081/sales/v1',
+  apiProductCommentsUrl: 'http://localhost:3000/api',
   apiBPMUrl: 'http://localhost:8080/kie-server/services/rest/server/'
 };
