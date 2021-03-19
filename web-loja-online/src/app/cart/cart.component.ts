@@ -32,10 +32,10 @@ export class CartComponent implements OnInit {
   onSubmit(customerData) {
     // Process checkout data here
 
-    let body = '{"carrinho":{"Carrinho":{';
-    body += '"endereco":"' + customerData.address + '",';
-    body += '"nomeDestinatario":"' + customerData.name + ' ",';
-    body += '"listaProdutos":[';
+    let body = '{"checkout":{"Checkout":{';
+    body += '"address":"' + customerData.address + '",';
+    body += '"receiptName":"' + customerData.name + ' ",';
+    body += '"productList":[';
 
     const cart = this.cartService.getItems();
 

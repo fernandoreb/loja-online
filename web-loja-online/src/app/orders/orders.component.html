@@ -1,0 +1,47 @@
+<div class="principal">
+    <div class="title">
+      <h2>Products</h2>
+    </div>
+    <!--<mat-grid-list cols="2">
+      <mat-grid-tile *ngFor="let order of orders;">
+        <mat-card>
+          <mat-card-header>
+            <h3>
+              <a [title]="order['process-instance-desc'] + ' details'" [routerLink]="['/products', order['process-instance-id']]">
+                {{ order['process-instance-id'] }}
+              </a>
+            </h3>
+          </mat-card-header>
+          <mat-card-content>
+            <p *ngIf="order['process-instance-desc'] ">
+              {{ order['process-instance-desc']  }}
+            </p>
+          </mat-card-content>
+          <mat-card-content>
+            <p *ngIf="order['process-instance-state'] ">
+              {{ order['process-instance-state']  }}
+            </p>
+          </mat-card-content>
+        </mat-card>
+      </mat-grid-tile>
+    </mat-grid-list>-->
+    <table mat-table [dataSource]="orders" class="mat-elevation-z8">
+        <ng-container matColumnDef="process-instance-id">
+            <th mat-header-cell *matHeaderCellDef> Nro. </th>
+            <td mat-cell *matCellDef="let element"> {{element['process-instance-id']}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="process-instance-state">
+            <th mat-header-cell *matHeaderCellDef> Situação</th>
+            <td mat-cell *matCellDef="let element"> {{element['process-instance-state']}} </td>
+          </ng-container>
+
+          <ng-container matColumnDef="start-date">
+            <th mat-header-cell *matHeaderCellDef> Data Pedido</th>
+            <td mat-cell *matCellDef="let element"> {{element['start-date'] | date: 'dd-MM-yyyy'}} </td>
+          </ng-container>
+
+          <tr mat-header-row *matHeaderRowDef="displayedColumns"></tr>
+          <tr mat-row *matRowDef="let row; columns: displayedColumns;"></tr>  
+    </table>
+  </div>

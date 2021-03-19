@@ -21,6 +21,8 @@ import { AppRoutingModule } from './app.routing.module';
 import { initializer } from './_utils/app-init';
 import { HomeLojaComponent } from './home-loja/home-loja.component';
 
+import { MatTableModule } from '@angular/material/table';
+
 import {
   MatInputModule,
   MatFormFieldModule,
@@ -36,6 +38,7 @@ import {
   MatCheckboxModule,
   MatButtonToggleModule
 } from '@angular/material';
+import { OrdersComponent } from './orders/orders.component';
 
 const materialModules = [
   MatInputModule,
@@ -62,7 +65,8 @@ const materialModules = [
     ProductDetailsComponent,
     CartComponent,
     ShippingComponent,
-    HomeLojaComponent
+    HomeLojaComponent,
+    OrdersComponent
   ],
   imports: [
     BrowserModule,
@@ -71,6 +75,7 @@ const materialModules = [
     FormsModule,
     ReactiveFormsModule,
     AppRoutingModule,
+    MatTableModule,
     ...materialModules
   ],
   providers: [

@@ -1,3 +1,4 @@
+import { OrdersComponent } from './orders/orders.component';
 import { HomeLojaComponent } from './home-loja/home-loja.component';
 import { NgModule } from '@angular/core';
 
@@ -37,6 +38,12 @@ const appRoutes: Routes = [
   {
     path: 'shipping',
     component: ShippingComponent,
+    canActivate: [AuthGuard],
+    data: { roles: ['SuperUser', 'NormalUser'] }
+  },
+  {
+    path: 'orders',
+    component: OrdersComponent,
     canActivate: [AuthGuard],
     data: { roles: ['SuperUser', 'NormalUser'] }
   }

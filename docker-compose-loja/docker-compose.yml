@@ -37,18 +37,18 @@ services:
         - 6379:6379
       restart: always
 
-    jbpm:
-      image: fernandoreb/jbpm-server-7.28-cors
-      ports: 
-        - 8082:8080
-      volumes: 
-        - /home/fernandoreb/docker/volumes/jbpm/standalone_data:/jbpm-server-7.28.0.Final-dist/standalone/data
-        - /home/fernandoreb/docker/volumes/jbpm/niogit:/jbpm-server-7.28.0.Final-dist/.niogit
-        - /home/fernandoreb/docker/volumes/jbpm/niogit-caseapp:/jbpm-server-7.28.0.Final-dist/.niogit-caseapp
-        - /home/fernandoreb/docker/volumes/jbpm/repositories:/jbpm-server-7.28.0.Final-dist/repositories
-        - /home/fernandoreb/docker/volumes/jbpm/index:/jbpm-server-7.28.0.Final-dist/.index
-        - /home/fernandoreb/.m2:$HOME/.m2
-      restart: always
+#    jbpm:
+#      image: fernandoreb/jbpm-server-7.28-cors
+#      ports: 
+ #       - 8082:8080
+ #     volumes: 
+ #       - /home/fernandoreb/docker/volumes/jbpm/standalone_data:/jbpm-server-7.28.0.Final-dist/standalone/data
+ #       - /home/fernandoreb/docker/volumes/jbpm/niogit:/jbpm-server-7.28.0.Final-dist/.niogit
+ #       - /home/fernandoreb/docker/volumes/jbpm/niogit-caseapp:/jbpm-server-7.28.0.Final-dist/.niogit-caseapp
+ #       - /home/fernandoreb/docker/volumes/jbpm/repositories:/jbpm-server-7.28.0.Final-dist/repositories
+ #       - /home/fernandoreb/docker/volumes/jbpm/index:/jbpm-server-7.28.0.Final-dist/.index
+ #       - /home/fernandoreb/.m2:$HOME/.m2
+ #     restart: always
    
 #    service-loja-online:
 #      depends_on:
