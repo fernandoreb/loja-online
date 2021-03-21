@@ -79,16 +79,15 @@ services:
         - ./jbpm-server/volumes/m2:$HOME/.m2
       restart: always
 
-#    service-loja-online:
-#      depends_on:
-#        - mongo
-#        - redis
-#        - jbpm
-#        - keycloack
-#      image: fernandoreb/service-loja-online
-#      ports: 
-#        - 3000:3000
-#      links:
-#        - mongo
-#        - redis
-#      restart: always
+    service-loja-online:
+      depends_on:
+        - mongo
+        - redis
+        - jbpm
+      image: fernandoreb/service-loja-online:1.0.0
+      ports: 
+        - 3000:3000
+      links:
+        - mongo
+        - redis
+      restart: always
