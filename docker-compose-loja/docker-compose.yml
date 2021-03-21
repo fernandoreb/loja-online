@@ -91,3 +91,17 @@ services:
         - mongo
         - redis
       restart: always
+
+    sales-taxes-service:
+      depends_on:
+        - mongo
+        - redis
+        - jbpm
+      image: fernandoreb/sales-taxes-service:1.0.0
+      ports:
+        - 8081:8081
+      links:
+        - mongo
+        - redis
+      restart: always
+
