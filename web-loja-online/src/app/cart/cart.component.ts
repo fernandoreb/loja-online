@@ -3,6 +3,7 @@ import { FormBuilder } from "@angular/forms";
 
 import { CartService } from "../_services/cart.service";
 import { CheckoutService } from "../_services/checkout.service";
+import { KeycloakService } from 'keycloak-angular';
 
 @Component({
   selector: "app-cart",
@@ -18,7 +19,8 @@ export class CartComponent implements OnInit {
   constructor(
     private cartService: CartService,
     private formBuilder: FormBuilder,
-    private checkoutService: CheckoutService
+    private checkoutService: CheckoutService,
+    private keycloakService: KeycloakService
   ) {}
 
   ngOnInit() {
@@ -29,7 +31,7 @@ export class CartComponent implements OnInit {
     });
   }
 
-  onSubmit(customerData) {
+  async onSubmit(customerData) {
     // Process checkout data here
 
     let body = '{"checkout":{"Checkout":{';
@@ -55,7 +57,9 @@ export class CartComponent implements OnInit {
     body += ']';
     body += '}}}';
 
-    this.checkoutService.checkout(body).subscribe(resp => {
+    let token = await this.keycloakService.getToken();
+
+    this.checkoutService.checkout(body,token).subscribe(resp => {
       this.numPedido = resp;
     });
 

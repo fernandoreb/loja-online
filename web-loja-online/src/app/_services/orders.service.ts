@@ -11,8 +11,10 @@ export class OrdersService {
 
   constructor(private http: HttpClient) { }
 
-  listOrders(){
-
+  /*async listOrders(){
+    
+    let token = await this.keycloakService.getToken();
+    
     const container = 'jbpm_bpm_loja_online_1.0.0-SNAPSHOT';
 //    const process = 'com.myspace.jbpm_bpm_loja_online.compraOnline';
 
@@ -21,11 +23,31 @@ export class OrdersService {
     const httpOptions = {
       headers: new HttpHeaders({
         'Content-Type':  'application/json',
-        'Authorization': 'Basic d2JhZG1pbjp3YmFkbWlu',
+        'Authorization': 'Bearer '+token,
         'Accept':'application/json'
       })
     };
+    
+   //'Authorization': 'Basic d2JhZG1pbjp3YmFkbWlu',
+    return this.http.get<any[]>(serviceURL, httpOptions);
+  }*/
+  listOrders(token){
+    
+    const container = 'jbpm_bpm_loja_online_1.0.0-SNAPSHOT';
+//    const process = 'com.myspace.jbpm_bpm_loja_online.compraOnline';
 
+    const serviceURL = `${environment.apiBPMUrl}containers/` + container + `/processes/instances?status=1&status=2&status=3&pageSize=20`;
+
+    const httpOptions = {
+      headers: new HttpHeaders({
+        'Content-Type':  'application/json',
+        'Authorization': 'Bearer '+token,
+        'Accept':'application/json'
+      })
+    };
+    
+   //'Authorization': 'Basic d2JhZG1pbjp3YmFkbWlu',
     return this.http.get<any[]>(serviceURL, httpOptions);
   }
+  
 }

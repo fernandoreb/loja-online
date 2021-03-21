@@ -4,20 +4,20 @@ import { KeycloakConfig } from 'keycloak-angular';
 // The list of file replacements can be found in `angular.json`.
 
 let keycloakConfig: KeycloakConfig = {
-  url: 'http://localhost:8180/auth',
+  url: 'http://192.168.0.15:8180/auth',
   realm: 'loja_online',
   clientId: 'lojaOnline',
   "credentials": {
-    "secret": "749314c6-117c-43bd-ad28-a2ff38ed21ba"
+    "secret": "17dea393-abdc-4286-a819-c10eef1145c0"
   }
 };
 
 export const environment = {
   production: false,
   keycloakConfig,
-  apiProductUrl: 'http://localhost:8081/sales/v1',
-  apiProductCommentsUrl: 'http://localhost:3000/api',
-  apiBPMUrl: 'http://localhost:8080/kie-server/services/rest/server/'
+  apiProductUrl: 'http://192.168.0.15:8081/sales/v1',
+  apiProductCommentsUrl: 'http://192.168.0.15:3000/api',
+  apiBPMUrl: 'http://192.168.0.15:8082/kie-server/services/rest/server/'
 };
 
 /*

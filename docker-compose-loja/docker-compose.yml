@@ -1,25 +1,52 @@
 version: '3'
 
 services:
-    mysql-service:
-      image: mysql
+    mysql:
+      image: mysql:5.7.29
+      container_name: mysql
       ports: 
         - 3306:3306
       volumes:
-        - /home/fernandoreb/docker/volumes/mysql:/var/lib/mysql
+#        - /home/fernandoreb/docker/volumes/mysql:/var/lib/mysql
+        - ./mysql/volume:/var/lib/mysql
+        - ./mysql/scripts:/docker-entrypoint-initdb.d
+        - ./mysql/conf/my.cnf:/etc/mysql/my.cnf
       environment:
         MYSQL_ROOT_PASSWORD : 'root'
-    keycloack:
-      image: jboss/keycloak
-      ports: 
-        - 8180:8080
-      volumes: 
-        - /home/fernandoreb/docker/volumes/keycloak/tmp:/tmp
-        - /home/fernandoreb/docker/volumes/keycloak/data:/opt/jboss/keycloak/standalone/data
-      restart: always
+        MYSQL_USER: lojaonline
+        MYSQL_PASSWORD: lojaonline
+    phpmyadmin:
+      image: phpmyadmin/phpmyadmin
+      container_name: dev_pma
+      links:
+        - mysql
       environment:
+        PMA_HOST: mysql
+        PMA_PORT: 3306  
+        PMA_ARBITRARY: 1
+      restart: always
+      ports:
+        - 8183:80
+    keycloak:
+      image: jboss/keycloak:9.0.2
+      healthcheck:
+        test: ["CMD", "nc", "-z","localhost", "8080"]
+        interval: 10s
+        retries: 5
+      ports:
+        - "8180:8080"
+        - "8443:8443"
+      environment:
+        DB_VENDOR: MYSQL
+        DB_ADDR: mysql
+        DB_DATABASE: KEYCLOAK
+        DB_USER: lojaonline
+        DB_PASSWORD: lojaonline
         KEYCLOAK_USER: admin
         KEYCLOAK_PASSWORD: admin
+        JDBC_PARAMS: "useSSL=false"
+      depends_on:
+        - mysql
     mongo:
       image: mongo:3.4.23-xenial
       ports: 
@@ -37,19 +64,21 @@ services:
         - 6379:6379
       restart: always
 
-#    jbpm:
-#      image: fernandoreb/jbpm-server-7.28-cors
-#      ports: 
- #       - 8082:8080
- #     volumes: 
- #       - /home/fernandoreb/docker/volumes/jbpm/standalone_data:/jbpm-server-7.28.0.Final-dist/standalone/data
- #       - /home/fernandoreb/docker/volumes/jbpm/niogit:/jbpm-server-7.28.0.Final-dist/.niogit
- #       - /home/fernandoreb/docker/volumes/jbpm/niogit-caseapp:/jbpm-server-7.28.0.Final-dist/.niogit-caseapp
- #       - /home/fernandoreb/docker/volumes/jbpm/repositories:/jbpm-server-7.28.0.Final-dist/repositories
- #       - /home/fernandoreb/docker/volumes/jbpm/index:/jbpm-server-7.28.0.Final-dist/.index
- #       - /home/fernandoreb/.m2:$HOME/.m2
- #     restart: always
-   
+    jbpm:
+      image: fernandoreb/jbpm-server-7.51.0.final-dist:1.0.3
+      ports: 
+        - 8082:8080
+      volumes:
+        - ./jbpm-server/standalone/configuration/standalone.xml:/jbpm/jbpm-server-7.51.0.Final-dist/standalone/configuration/standalone.xml
+        - ./jbpm-server/standalone/configuration/standalone.conf:/jbpm/jbpm-server-7.51.0.Final-dist/standalone/configuration/standalone.conf
+        - ./jbpm-server/volumes/standalone_data:/jbpm/jbpm-server-7.51.0.Final-dist/standalone/data
+        - ./jbpm-server/volumes/niogit:/jbpm/jbpm-server-7.51.0.Final-dist/.niogit
+        - ./jbpm-server/volumes/niogit-caseapp:/jbpm/jbpm-server-7.51.0.Final-dist/.niogit-caseapp
+        - ./jbpm-server/volumes/repositories:/jbpm/jbpm-server-7.51.0.Final-dist/repositories
+        - ./jbpm-server/volumes/index:/jbpm/jbpm-server-7.51.0.Final-dist/.index
+        - ./jbpm-server/volumes/m2:$HOME/.m2
+      restart: always
+
 #    service-loja-online:
 #      depends_on:
 #        - mongo

@@ -1,5 +1,6 @@
 import { OrdersService } from './../_services/orders.service';
 import { Component, OnInit } from '@angular/core';
+import { KeycloakService } from 'keycloak-angular';
 
 @Component({
   selector: 'app-orders',
@@ -8,18 +9,34 @@ import { Component, OnInit } from '@angular/core';
 })
 export class OrdersComponent implements OnInit {
 
-  constructor(private orderService:OrdersService) { }
+  constructor(private orderService:OrdersService, private keycloakService: KeycloakService) { }
   
   orders;
   displayedColumns: string[] = ['process-instance-id','process-instance-state','start-date'];
-  ngOnInit() {
-    this.orderService.listOrders()
+  
+  async ngOnInit() {
+
+    let token = await this.keycloakService.getToken();
+
+    this.orderService.listOrders(token)
     .subscribe(resp =>{
       this.orders = resp["process-instance"];
       console.log(this.orders);
       this.updateStatus();
     });
   }
+
+  /*
+  ngOnInit() {
+    this.orderService.listOrders()
+    .then(resp =>{
+      resolve();
+      this.orders = resp["process-instance"];
+      console.log(this.orders);
+      this.updateStatus();
+    });
+  }
+  */
 
   updateStatus(){
     for (let i = 0; i < this.orders.length; i++) {
