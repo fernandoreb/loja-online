@@ -177,7 +177,7 @@
 	  <secure-deployment name="business-central.war">
 	    <realm>loja_online</realm>
 	    <realm-public-key> MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAgCjvrSzGEM1cPZ94Q3fUPHi7t+PnufwSA27rlNP9GJUIrZh2iNFnaCXx7Qy+5PlA+RO3j04j0SeqGPN9Ss2j4Vja2TIr2aGELXwdDpVkX+LfZuR6BCdzLhpMxZcXWQFa2uVM3WL8JDsFs9KiZW05tRY6+BfwLl1useimMCOi+GealGGIktX3L+Q/UlwKbiR9cyJrteSag42yjbb6yVyn2oG8HR4JzeXaYVOg+jpZA9XK0Kop/PGb3LDJnQam1w6f3MSR6NIRL3gHwmSYejMFdh+LfXrlIWLRtXrjXCfXMZ8zZP4i4h3mpo3eAiyF7ONaArRkfHml8G3HY59mwBkW3QIDAQAB</realm-public-key>
-	    <auth-server-url>http://192.168.0.15:8180/auth</auth-server-url>
+	    <auth-server-url>http://192.168.0.27:8180/auth</auth-server-url>
 	    <ssl-required>external</ssl-required>
 	    <resource>kie</resource>
 	    <enable-basic-auth>true</enable-basic-auth>
@@ -187,7 +187,7 @@
 	  <secure-deployment name="kie-server.war">
 	    <realm>loja_online</realm>
 	    <realm-public-key> MIIBIjANBgkqhkiG9w0BAQEFAAOCAQ8AMIIBCgKCAQEAgCjvrSzGEM1cPZ94Q3fUPHi7t+PnufwSA27rlNP9GJUIrZh2iNFnaCXx7Qy+5PlA+RO3j04j0SeqGPN9Ss2j4Vja2TIr2aGELXwdDpVkX+LfZuR6BCdzLhpMxZcXWQFa2uVM3WL8JDsFs9KiZW05tRY6+BfwLl1useimMCOi+GealGGIktX3L+Q/UlwKbiR9cyJrteSag42yjbb6yVyn2oG8HR4JzeXaYVOg+jpZA9XK0Kop/PGb3LDJnQam1w6f3MSR6NIRL3gHwmSYejMFdh+LfXrlIWLRtXrjXCfXMZ8zZP4i4h3mpo3eAiyF7ONaArRkfHml8G3HY59mwBkW3QIDAQAB</realm-public-key>
-	    <auth-server-url>http://192.168.0.15:8180/auth</auth-server-url>
+	    <auth-server-url>http://192.168.0.27:8180/auth</auth-server-url>
 	    <ssl-required>external</ssl-required>
 	    <resource>kie</resource>
 	    <enable-basic-auth>true</enable-basic-auth>
