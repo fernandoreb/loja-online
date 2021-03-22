@@ -1,36 +1,269 @@
 # loja-online
 Projeto - Exemplo Loja Online 
 
+~~~
 sudo docker-compose up -d
+~~~
 
-Acessando uma instância
-sudo docker exec -it 6fb4 bash
+Todas as imagens utilizadas estão no docker hub  
 
-Serviço
-service-loja-online
-node src/app.js 
-
-JBPM - Usar docker- compose
-jbpm-server-7.28.0.Final-dist/bin
-./standalone.sh
+## Front Angular
 
 Front Angular
 web-loja-online
+
+~~~
 ng serve
+~~~
+
+URL:
+~~~
+http://localhost:4200/
+~~~
+
+## mysql
+
+Montado via docker-compose  
+
+Volumes:  
+
+~~~
+- ./mysql/volume:/var/lib/mysql
+- ./mysql/scripts:/docker-entrypoint-initdb.d
+- ./mysql/conf/my.cnf:/etc/mysql/my.cnf
+~~~
+
+Montar esse volume dentro da pasta docker-compose-loja  
+~~~
+mysql/volume
+~~~
+
+Configuração, arquivo my.conf:
+~~~
+!includedir /etc/mysql/conf.d/
+!includedir /etc/mysql/mysql.conf.d/
+[mysqld]
+max_connections=1000
+~~~
+
+Scripts de Incicialização de bases de dados:
+~~~
+scripts/db_sales.sql -> Base utilizada pela aplicação springboot sales-taxes-service
+scripts/keycloak.sql -> Base utilizada pelo keycloak
+~~~
+
+São criados dois usuários:
+
+~~~
+- root/root
+- lojaonline/lojaonline
+~~~
+
+Dados:  
+~~~
+Imagem: mysql:5.7.29
+Porta: 3306
+~~~
+
+## phpmyadmin
+
+Montado via docker-compose  
+
+URL da aplicação:  
+~~~
+http://localhost:8183/
+~~~
+
+Dados:  
+~~~
+Imagem: phpmyadmin/phpmyadmin
+Porta: 8183
+~~~
+
+## mongo
+
+Montar esse volume dentro da pasta docker-compose-loja  
+~~~
+mongo
+~~~
+
+Dados:  
+~~~
+Imagem: mongo:3.4.23-xenial
+Porta: 27017
+Autenticação: off
+~~~
+
+## redis
+
+Dados:  
+~~~
+Imagem: redis:5.0.6-alpine
+Porta: 6379
+Autenticação: off
+~~~
+
+## keycloak
+
+Utiliza o mysql como base de dados.
+
+Dados:  
+~~~
+Imagem: jboss/keycloak:9.0.2 
+
+environment:
+        DB_VENDOR: MYSQL
+        DB_ADDR: mysql
+        DB_DATABASE: KEYCLOAK
+        DB_USER: lojaonline
+        DB_PASSWORD: lojaonline
+        KEYCLOAK_USER: admin
+        KEYCLOAK_PASSWORD: admin
+        JDBC_PARAMS: "useSSL=false"
+Portas:        
+        - "8180:8080" -> Porta HTTP
+        - "8443:8443"        
+~~~
+
+## jbm
+
+Utiliza o mysql como base de dados e utiliza o keycloak para autenticação de usuários.
+
+Imagem montada a partir da versão jbpm-server-7.51.0.final-dist do jbm. Incluídos nessa imagem o driver do MySQL e pluging do keycloak.  
+
+Mais detalhes sobre a integração, aqui:
+http://blog.athico.com/2016/03/keycloak-sso-integration-into-jbpm-and.html
+
+~~~
+https://www.jbpm.org/
+~~~
+
+Configurações:  
+~~~
+standalone.xml -> Configurado para usar o mysql, keycloak e cors habilitado.
+~~~
+
+Montar esse volume dentro da pasta docker-compose-loja  
+~~~
+jbpm-server/volumes
+~~~
+
+Dados:  
+~~~
+Imagem: fernandoreb/jbpm-server-7.51.0.final-dist:1.0.3 
+
+volumes:
+        - ./jbpm-server/standalone/configuration/standalone.xml:/jbpm/jbpm-server-7.51.0.Final-dist/standalone/configuration/standalone.xml
+        - ./jbpm-server/standalone/configuration/standalone.conf:/jbpm/jbpm-server-7.51.0.Final-dist/standalone/configuration/standalone.conf
+~~~
+
+## sales-taxes-service
+
+Projeto Java feito com SpringBoot. É o banckend responsável por manter os produtos e taxas. Usa o mysql como base de dados
+
+As configurações estão dentro da própria imagem.
+
+URL Base do Serviço:
+~~~
+http://localhost:8081/sales/v1
+~~~
+
+URL do Swagger da aplicação:
+~~~
+http://localhost:8081/swagger-ui.html#
+~~~
+
+Dados:  
+~~~
+Imagem: fernandoreb/sales-taxes-service:1.0.0
+Porta: 8081
+~~~
+
+Utilize o swagger para fazer o input de dados nas tabelas
+
+## sales-taxes-service
+
+Projeto nodejs versão 10. É o backend responsável por manter os comentários dos produtos. Usa o mongodb e redis.
+
+As configurações estão dentro da própria imagem.
+
+## Setup das aplicações
+
+Uma vez inciado o ambiente, na primeira vez, executar os passos:
+
+### Setup do RH-SSO
+
+1 Criar um usuário administrativo
+
+~~~
+sugestão: admin/admin
+~~~
+
+2 Criar um realm chamado ***loja_online***
+
+2.1 Criar o client de conexão da aplicação web: ***lojaOnline***  
+
+~~~
+Access_Type: confidential
+Valid Redirect URIs: *
+Web Origins: *
+~~~
+
+**Obs:** Não esquecer de copiar o valor da Secret do Client para colocar na aplicação web.
+
+2.2 Criar o client de conexão da aplicação jbpm: ***kie***  
+
+~~~
+Access_Type: confidential
+Standard Flow Enabled: true
+Implicit Flow Enabled: true
+Direct Access Grants Enabled: true
+Service Accounts Enabled: true
+Valid Redirect URIs: *
+Web Origins: *
+~~~
+
+**Obs:** Não esquecer de copiar o valor da Secret do Client para colocar no arquivo de configuração do jbpm (standalone.xml).
 
 
-mysql> CREATE USER 'keycloak'@'%' IDENTIFIED BY 'keycloak';
-Query OK, 0 rows affected (0.01 sec)
+2.3 Criar as roles abaixo, usadas pela aplicação web:
 
-mysql> CREATE DATABASE keycloak;
-Query OK, 1 row affected (0.00 sec)
+~~~
+- NormalUser - Usuário padrão da aplicação web
+- SuperUser - Usuário admin da aplicação web
+~~~
 
-mysql> GRANT ALL PRIVILEGES ON keycloak.* TO 'keycloak'@'%';
-Query OK, 0 rows affected (0.00 sec)
+2.4 Criar as roles abaixo, usadas pela aplicação jbpm:
 
-JBPM 
-wbadmin/wbadmin
+~~~
+- admin - Perfil admin
+- analyst - Perfil genério de analista
+- developer - Perfil de desenvolvedor (tem permissão de criar processos)
+- kie-server - perfil do servidor de processos
+- kiemgmt - perfil do servidor de processos
+- manager - pefil genérico de gestão
+- rest-all - perfil para consumo de apis rest
+- rest-project - perfil para consumo de apis rest
+- user - perfil de usuário de processos (pode acessar o busness central)
+- COMPRA_ONLINE_BACK - usuário associado a tarefa de backoffice para o processo de compra.
+~~~
 
-Keycloak
-admin/admin
+3 Criação dos usuários no realm loja_online
+
+
+
+## Montagem das imagens Docker
+
+Lista de usuários/senha -> perfis -> Observação
+
+Obs: as roles default foram mantidas para cada usuário.
+~~~
+admin/admin -> admin,kiemgmt,resl-all -> usuário administrativo do jbpm
+backloja/backloja -> 
+usuarioCompra/usuarioCompra
+kieserver/kieserver1! -> 
+wbadmin/wbadmin -> admin,kiemgmt,resl-all -> usuário administrativo do jbpm
+### 
+
+
 

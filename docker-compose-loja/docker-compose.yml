@@ -7,7 +7,6 @@ services:
       ports: 
         - 3306:3306
       volumes:
-#        - /home/fernandoreb/docker/volumes/mysql:/var/lib/mysql
         - ./mysql/volume:/var/lib/mysql
         - ./mysql/scripts:/docker-entrypoint-initdb.d
         - ./mysql/conf/my.cnf:/etc/mysql/my.cnf
@@ -53,7 +52,7 @@ services:
         - 27017:27017
         - 28017:28017
       volumes: 
-        - /home/fernandoreb/docker/volumes/mongodb:/data/db
+        - ./mongo:/data/db
       restart: always
       environment:
         AUTH: 'no'
