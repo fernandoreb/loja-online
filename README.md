@@ -259,7 +259,7 @@ backloja/backloja -> COMPRA_ONLINE_BACK, rest-all, user -> Usuário de backoffic
 usuariocompra/usuariocompra -> user, NormalUser, rest-all -> Usuário da aplicação com permissão de criar um processo (usuário de testes)
 kieserver/kieserver1! -> admin, kie-server, rest-all -> Usuário admministrativo do business central e kieserver.
 wbadmin/wbadmin -> admin,kiemgmt,resl-all -> usuário administrativo do jbpm
-### 
+~~~ 
 
 4 Criação de produtos de teste
 
