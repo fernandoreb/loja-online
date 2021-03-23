@@ -248,22 +248,64 @@ Web Origins: *
 - COMPRA_ONLINE_BACK - usuário associado a tarefa de backoffice para o processo de compra.
 ~~~
 
-3 Criação dos usuários no realm loja_online
-
-
-
-## Montagem das imagens Docker
+3 Criação dos usuários no realm loja_online   
 
 Lista de usuários/senha -> perfis -> Observação
 
 Obs: as roles default foram mantidas para cada usuário.
 ~~~
 admin/admin -> admin,kiemgmt,resl-all -> usuário administrativo do jbpm
-backloja/backloja -> 
-usuarioCompra/usuarioCompra
-kieserver/kieserver1! -> 
+backloja/backloja -> COMPRA_ONLINE_BACK, rest-all, user -> Usuário de backoffice de processos.
+usuariocompra/usuariocompra -> user, NormalUser, rest-all -> Usuário da aplicação com permissão de criar um processo (usuário de testes)
+kieserver/kieserver1! -> admin, kie-server, rest-all -> Usuário admministrativo do business central e kieserver.
 wbadmin/wbadmin -> admin,kiemgmt,resl-all -> usuário administrativo do jbpm
 ### 
+
+4 Criação de produtos de teste
+
+Usando API Swagger Backend:  
+http://localhost:8081/swagger-ui.html#
+
+
+Produto01:  
+~~~
+name: Zenfone Shot Plus Silver
+description: Zenfone Shot Plus Silver Asus 4g 128gb
+price 1046
+sku: 123456
+url: https://encrypted-tbn1.gstatic.com/shopping?q=tbn:ANd9GcTuJliwG9LFyRNAkImH9aH76xuTxN6LaiPl1sK8cXw3Rv5j44wwYKxisd-AWTw4m_f6Nz_NtjQrJQ&usqp=CAc
+~~~
+
+Produto 02:
+~~~
+name: Asus Zenfone Zoom
+description: Smartphone Asus Zenfone Zoom ZX551M Preto 32GB
+price 1000
+sku: 789456
+url: https://encrypted-tbn2.gstatic.com/shopping?q=tbn:ANd9GcTnsYEuiV5hJEgr4NLbEUkwFLJzXNR_fEswMF3MsWHVrGDsKPRzo0dGWRt3PhiLXMUVNd4pRLJUBzA&usqp=CAc
+~~~
+
+Criar uma taxa e associar aos produtos  
+
+5 Criação de um comentário  
+
+Chamar a API de comentários
+
+Usando Postman:
+~~~
+Verbo: Post
+URL: http://localhost:3000/api/productsComments
+
+Body
+{
+	"sku":"12345",
+	"description":"Very Good!!"
+}
+~~~
+
+## Montagem das imagens Docker
+
+
 
 
 
