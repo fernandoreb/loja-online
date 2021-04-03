@@ -14,6 +14,7 @@ services:
         MYSQL_ROOT_PASSWORD : 'root'
         MYSQL_USER: lojaonline
         MYSQL_PASSWORD: lojaonline
+      restart: always
     phpmyadmin:
       image: phpmyadmin/phpmyadmin
       container_name: dev_pma
@@ -46,6 +47,7 @@ services:
         JDBC_PARAMS: "useSSL=false"
       depends_on:
         - mysql
+      restart: always
     mongo:
       image: mongo:3.4.23-xenial
       ports: 
@@ -104,3 +106,22 @@ services:
         - redis
       restart: always
 
+    zookeeper-bgdt:
+      image: confluentinc/cp-zookeeper:latest
+      environment:
+        ZOOKEEPER_CLIENT_PORT: 32181
+        ZOOKEEPER_TICK_TIME: 2000
+      ports:
+        - "32181:32181"
+    kafka-bgdt:
+      image: confluentinc/cp-kafka:latest
+      ports:
+        - "9082:8080"
+        - "29092:29092"
+      depends_on:
+        - zookeeper-bgdt
+      environment:
+        KAFKA_BROKER_ID: 1
+        KAFKA_ZOOKEEPER_CONNECT: zookeeper-bgdt:32181
+        KAFKA_ADVERTISED_LISTENERS: PLAINTEXT://192.168.0.27:29092
+        KAFKA_OFFSETS_TOPIC_REPLICATION_FACTOR: 1
