@@ -11,10 +11,16 @@ var redis = require('redis');
 }
 );*/
 
-//docker-compose
+//export REDIS_HOST=192.168.0.27
+//export REDIS_PORT=32625
+var redisHost = process.env.REDIS_HOST;
+var redisPort = process.env.REDIS_PORT;
+//env REDIS_HOST
+//env REDIS_PORT
+
 var client = redis.createClient({
-    host: "redis",
-    port: 6379
+    host: ""+redisHost+"",
+    port: redisPort
   }
 );
 

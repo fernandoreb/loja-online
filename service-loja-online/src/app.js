@@ -14,7 +14,6 @@ app.use(function (req, res, next) {
   next();
 });
 
-
 app.use(express.json())
 
 //adicionando a roda dos serviços em /api
@@ -39,3 +38,5 @@ const server = http.createServer(app)
 
 server.listen(port)
 console.log('server run on port:' + port);
+
+

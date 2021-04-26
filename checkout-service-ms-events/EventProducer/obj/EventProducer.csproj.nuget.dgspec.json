@@ -1,0 +1,68 @@
+{
+  "format": 1,
+  "restore": {
+    "/home/fernandoreb/Fernando/apps/loja-online/checkout-service-ms-events/EventProducer/EventProducer.csproj": {}
+  },
+  "projects": {
+    "/home/fernandoreb/Fernando/apps/loja-online/checkout-service-ms-events/EventProducer/EventProducer.csproj": {
+      "version": "1.0.0",
+      "restore": {
+        "projectUniqueName": "/home/fernandoreb/Fernando/apps/loja-online/checkout-service-ms-events/EventProducer/EventProducer.csproj",
+        "projectName": "EventProducer",
+        "projectPath": "/home/fernandoreb/Fernando/apps/loja-online/checkout-service-ms-events/EventProducer/EventProducer.csproj",
+        "packagesPath": "/home/fernandoreb/.nuget/packages/",
+        "outputPath": "/home/fernandoreb/Fernando/apps/loja-online/checkout-service-ms-events/EventProducer/obj/",
+        "projectStyle": "PackageReference",
+        "configFilePaths": [
+          "/home/fernandoreb/.nuget/NuGet/NuGet.Config"
+        ],
+        "originalTargetFrameworks": [
+          "netcoreapp3.1"
+        ],
+        "sources": {
+          "https://api.nuget.org/v3/index.json": {}
+        },
+        "frameworks": {
+          "netcoreapp3.1": {
+            "projectReferences": {}
+          }
+        },
+        "warningProperties": {
+          "warnAsError": [
+            "NU1605"
+          ]
+        }
+      },
+      "frameworks": {
+        "netcoreapp3.1": {
+          "dependencies": {
+            "Confluent.Kafka": {
+              "target": "Package",
+              "version": "[1.6.3, )"
+            },
+            "Serilog.Sinks.Console": {
+              "target": "Package",
+              "version": "[3.1.1, )"
+            }
+          },
+          "imports": [
+            "net461",
+            "net462",
+            "net47",
+            "net471",
+            "net472",
+            "net48"
+          ],
+          "assetTargetFallback": true,
+          "warn": true,
+          "frameworkReferences": {
+            "Microsoft.NETCore.App": {
+              "privateAssets": "all"
+            }
+          },
+          "runtimeIdentifierGraphPath": "/usr/share/dotnet/sdk/3.1.101/RuntimeIdentifierGraph.json"
+        }
+      }
+    }
+  }
+}

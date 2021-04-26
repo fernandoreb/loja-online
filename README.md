@@ -132,7 +132,8 @@ Utiliza o mysql como base de dados e utiliza o keycloak para autenticação de u
 Imagem montada a partir da versão jbpm-server-7.51.0.final-dist do jbm. Incluídos nessa imagem o driver do MySQL e pluging do keycloak.  
 
 Mais detalhes sobre a integração, aqui:
-http://blog.athico.com/2016/03/keycloak-sso-integration-into-jbpm-and.html
+http://blog.athico.com/2016/03/keycloak-sso-integration-into-jbpm-and.html  
+https://access.redhat.com/documentation/en-us/red_hat_jboss_bpm_suite/6.4/html/administration_and_configuration_guide/integrating_red_hat_jboss_bpm_suite_with_red_hat_single_sign_on
 
 ~~~
 https://www.jbpm.org/
