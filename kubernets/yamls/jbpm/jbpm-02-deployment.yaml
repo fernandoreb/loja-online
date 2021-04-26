@@ -1,0 +1,36 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: jbpm-deployment
+  labels:
+    app: jbpm
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: jbpm
+  template:
+    metadata:
+      labels:
+        app: jbpm
+    spec:
+      containers:
+        - name: jbpm
+          image: fernandoreb/jbpm-server-7.51.0.final-dist:1.0.3
+          ports:
+            - containerPort: 8080
+          volumeMounts:
+          - name: standalone
+            mountPath: "/jbpm/jbpm-server-7.51.0.Final-dist/standalone/configuration/standalone.xml"
+            subPath: standalone.xml
+          - name: niogit
+            mountPath: "/jbpm/.niogit"
+            subPath: .niogit
+      volumes:
+      - name: standalone
+        configMap:
+          name: jbpm-standalone
+      - name: niogit
+        persistentVolumeClaim:
+          claimName: jbpm-niogit
