@@ -1,0 +1,52 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: keycloak-deployment
+  labels:
+    app: keycloak
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: keycloak
+  template:
+    metadata:
+      labels:
+        app: keycloak
+    spec:
+      containers:
+        - name: keycloak
+          image: jboss/keycloak:9.0.2
+          ports:
+            - containerPort: 8080
+          env:
+            - name: DB_VENDOR
+              value: MYSQL
+            - name: DB_ADDR
+              value: mysql-service
+            - name: DB_DATABASE
+              value: KEYCLOAK
+            - name: DB_USER
+              value: lojaonline
+            - name: DB_PASSWORD
+              value: lojaonline
+            - name: KEYCLOAK_USER
+              value: admin
+            - name: KEYCLOAK_PASSWORD
+              value: admin
+            - name: JDBC_PARAMS
+              value: useSSL=false
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: keycloak-service
+spec:
+  type: NodePort
+  selector:
+    app: keycloak
+  ports:
+  - protocol: TCP
+    port: 8080
+    targetPort: 8080

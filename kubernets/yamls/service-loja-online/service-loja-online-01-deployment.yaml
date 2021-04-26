@@ -1,0 +1,29 @@
+---
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: service-loja-online-deployment
+  labels:
+    app: service-loja-online
+spec:
+  replicas: 1
+  selector:
+    matchLabels:
+      app: service-loja-online
+  template:
+    metadata:
+      labels:
+        app: service-loja-online
+    spec:
+      containers:
+        - name: service-loja-online
+          image: fernandoreb/service-loja-online:1.0.1
+          ports:
+            - containerPort: 3000
+          env:
+            - name: MONGO_DB
+              value: "mongodb-service:27017"
+            - name: REDIS_HOST
+              value: redis-service
+            - name: REDIS_PORT
+              value: "6379"
