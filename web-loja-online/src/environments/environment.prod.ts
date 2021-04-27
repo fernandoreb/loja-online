@@ -4,18 +4,32 @@ import { KeycloakConfig } from 'keycloak-angular';
 // The list of file replacements can be found in `angular.json`.
 
 let keycloakConfig: KeycloakConfig = {
-  url: 'http://localhost:8180/auth',
+  url: 'http://192.168.0.27:31730/auth',
   realm: 'loja_online',
   clientId: 'lojaOnline',
   "credentials": {
-    "secret": "d47a2939-0fff-4603-94fb-30c4f13eb507"
+    "secret": "17dea393-abdc-4286-a819-c10eef1145c0"
   }
 };
 
 export const environment = {
-  production: true,
+  production: false,
   keycloakConfig,
-  apiProductUrl: 'http://localhost:8081/sales/v1',
-  apiProductCommentsUrl: 'http://localhost:3000/api',
-  apiBPMUrl: 'http://localhost:8080/kie-server/services/rest/server/'
+  apiProductUrl: 'http://192.168.0.27:31736/product/1',
+  apiProductCommentsUrl: 'http://192.168.0.27:31736/comments/1',
+  apiBPMUrl: 'http://192.168.0.27:31736/bpm/1/'
 };
+
+//
+//apiProductUrl: 'http://192.168.0.27:31126/sales/v1',
+//apiProductCommentsUrl: 'http://192.168.0.27:32269/api',
+//apiBPMUrl: 'http://192.168.0.27:31093/kie-server/services/rest/server/'
+
+/*
+ * For easier debugging in development mode, you can import the following file
+ * to ignore zone related error stack frames such as `zone.run`, `zoneDelegate.invokeTask`.
+ *
+ * This import should be commented out in production mode because it will have a negative impact
+ * on performance if an error is thrown.
+ */
+// import 'zone.js/dist/zone-error';  // Included with Angular CLI.
