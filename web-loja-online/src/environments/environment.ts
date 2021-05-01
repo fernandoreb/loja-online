@@ -4,7 +4,7 @@ import { KeycloakConfig } from 'keycloak-angular';
 // The list of file replacements can be found in `angular.json`.
 
 let keycloakConfig: KeycloakConfig = {
-  url: 'http://192.168.0.27:8180/auth',
+  url: 'http://192.168.0.27:31730/auth',
   realm: 'loja_online',
   clientId: 'lojaOnline',
   "credentials": {
@@ -15,10 +15,15 @@ let keycloakConfig: KeycloakConfig = {
 export const environment = {
   production: false,
   keycloakConfig,
-  apiProductUrl: 'http://192.168.0.27:8081/sales/v1',
-  apiProductCommentsUrl: 'http://192.168.0.27:3000/api',
-  apiBPMUrl: 'http://192.168.0.27:8082/kie-server/services/rest/server/'
+  apiProductUrl: 'http://192.168.0.27:31736/product/1',
+  apiProductCommentsUrl: 'http://192.168.0.27:31736/comments/1',
+  apiBPMUrl: 'http://192.168.0.27:31736/bpm/1/'
 };
+
+//
+//apiProductUrl: 'http://192.168.0.27:31126/sales/v1',
+//apiProductCommentsUrl: 'http://192.168.0.27:32269/api',
+//apiBPMUrl: 'http://192.168.0.27:31093/kie-server/services/rest/server/'
 
 /*
  * For easier debugging in development mode, you can import the following file
